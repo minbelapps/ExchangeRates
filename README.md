@@ -1,4 +1,4 @@
-# EXCHANGE RATES Web App.
+# EXCHANGE RATES WEB APP.
 
 ### Tech. used: Spring, JAXB, Bootstrap, jQuery 
 
@@ -7,3 +7,6 @@
  -  Maven
 
 ### Exchange rates are provided by Lietuvos Bankas
+
+
+rimas.gaina@seb.se
