@@ -1,4 +1,4 @@
-# Exchange rates Web app.
+# EXCHANGE RATES Web App.
 
 ### Tech. used: Spring, JAXB, Bootstrap, jQuery 
 
