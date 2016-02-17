@@ -1,6 +1,6 @@
 # EXCHANGE RATES WEB APP.
 
-### Tech. used: Spring, JAXB, Bootstrap, jQuery 
+### Tech. used: Spring, JAXB, FreeMarker (FTL), Bootstrap, jQuery 
 
 #### requirements:
  -  Java 1.7
@@ -8,5 +8,3 @@
 
 ### Exchange rates are provided by Lietuvos Bankas
 
-
-rimas.gaina@seb.se
