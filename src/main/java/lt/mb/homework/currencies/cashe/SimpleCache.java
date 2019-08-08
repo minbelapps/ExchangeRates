@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
 
-public class SimpleCashe {
+public class SimpleCache {
 	private static Map<String, EntryContainer<?>> cashe = new Hashtable<String, EntryContainer<?>>();
 
 	public static <T> void set(String key, T entry) {
@@ -12,27 +12,27 @@ public class SimpleCashe {
 	}
 
 	public static <T> void set(String key, T entry, Date end) {
-		EntryContainer<T> econtainer = new EntryContainer<T>();
-		econtainer.setBegin(new Date());
-		econtainer.setEnd(end);
-		econtainer.setEntry(entry);
-		cashe.put(key, econtainer);
+		EntryContainer<T> eContainer = new EntryContainer<T>();
+		eContainer.setBegin(new Date());
+		eContainer.setEnd(end);
+		eContainer.setEntry(entry);
+		cashe.put(key, eContainer);
 	}
 
 	public static <T> T get(String key, Class<T> clazz) {
 		@SuppressWarnings("unchecked")
-		EntryContainer<T> econtainer = (EntryContainer<T>) cashe.get(key);
-		if (econtainer == null) {
+		EntryContainer<T> eContainer = (EntryContainer<T>) cashe.get(key);
+		if (eContainer == null) {
 			return null;
 		}
-		if (econtainer.getEnd() == null) {
-			return econtainer.getEntry();
+		if (eContainer.getEnd() == null) {
+			return eContainer.getEntry();
 		}
-		if (econtainer.getEnd().getTime() <= System.currentTimeMillis()) {
+		if (eContainer.getEnd().getTime() <= System.currentTimeMillis()) {
 			clear(key);
 			return null;
 		} else {
-			return econtainer.getEntry();
+			return eContainer.getEntry();
 		}
 	}
 

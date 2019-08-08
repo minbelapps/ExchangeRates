@@ -2,7 +2,6 @@ package lt.mb.homework.currencies.services.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -14,7 +13,7 @@ import java.util.Map.Entry;
 import lt.mb.homework.currencies.beans.CurrDescriptionBean;
 import lt.mb.homework.currencies.beans.ExchangeRateBean;
 import lt.mb.homework.currencies.beans.ExchangeRateResultBean;
-import lt.mb.homework.currencies.cashe.SimpleCashe;
+import lt.mb.homework.currencies.cashe.SimpleCache;
 import lt.mb.homework.currencies.clients.bankoflithuania.BankOfLithuaniaClient;
 import lt.mb.homework.currencies.clients.bankoflithuania.CurrencyDescription;
 import lt.mb.homework.currencies.clients.bankoflithuania.FxRate;
@@ -53,12 +52,12 @@ public class ExchangeRatesLBServiceImpl implements ExchangeRatesService {
 
 	public Map<String, CurrDescriptionBean> getCurrenciesDescriptions() {
 		@SuppressWarnings("unchecked")
-		Map<String, CurrDescriptionBean> result = SimpleCashe.get(DESCRIPTIONS, Map.class);
+		Map<String, CurrDescriptionBean> result = SimpleCache.get(DESCRIPTIONS, Map.class);
 		if (result == null) {
 			BankOfLithuaniaClient client = new BankOfLithuaniaClient();
 			List<CurrencyDescription> descriptions = client.getCurrenciesDescriptions();
 			result = transform(descriptions);
-			SimpleCashe.set(DESCRIPTIONS, result);
+			SimpleCache.set(DESCRIPTIONS, result);
 		}
 		return result;
 	}
@@ -113,11 +112,11 @@ public class ExchangeRatesLBServiceImpl implements ExchangeRatesService {
 	}
 
 	private List<FxRate> getExchangeRatesUsingCashe(Date date) {
-		String dateFormated = TimeUtils.toString(date, TimeUtils.DATE_FORMAT_SHORT);
-		String key = EXCHANGE_RATES + dateFormated;
+		String dateFormatted = TimeUtils.toString(date, TimeUtils.DATE_FORMAT_SHORT);
+		String key = EXCHANGE_RATES + dateFormatted;
 
 		@SuppressWarnings("unchecked")
-		List<FxRate> result = SimpleCashe.get(key, List.class);
+		List<FxRate> result = SimpleCache.get(key, List.class);
 		if (result == null) {
 			BankOfLithuaniaClient client = new BankOfLithuaniaClient();
 			result = client.getExchangeRates(date);
@@ -129,7 +128,7 @@ public class ExchangeRatesLBServiceImpl implements ExchangeRatesService {
 					end = TimeUtils.different(new Date(), Calendar.MINUTE, 3);
 				}
 			}
-			SimpleCashe.set(key, result, end);
+			SimpleCache.set(key, result, end);
 		}
 		return result;
 	}

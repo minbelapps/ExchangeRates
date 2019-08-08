@@ -24,7 +24,7 @@ public class BankOfLithuaniaClient {
 	public List<FxRate> getExchangeRates(Date date) {
 		List<FxRate> currentList = null;
 		try {
-			currentList = Restfull.getExchangeRates(date);
+			currentList = Restful.getExchangeRates(date);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,16 +35,15 @@ public class BankOfLithuaniaClient {
 	public List<CurrencyDescription> getCurrenciesDescriptions() {
 		List<CurrencyDescription> descriptions = null;
 		try {
-			descriptions = Restfull.getDescriptions();
+			descriptions = Restful.getDescriptions();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return descriptions;
 	}
-
 }
 
-class Restfull {
+class Restful {
 
 	public static final String URL_EXCHANGE_RATE = "http://www.lb.lt/webservices/FxRates/FxRates.asmx/getFxRates?tp=EU&dt={dateFormated}";
 	public static final String URL_CURRENCIES = "http://www.lb.lt/webservices/ExchangeRates/ExchangeRates.asmx/getListOfCurrencies";
@@ -62,7 +61,6 @@ class Restfull {
 			e.printStackTrace();
 		}
 		return rateList;
-
 	}
 
 	static List<CurrencyDescription> getDescriptions() {
@@ -72,8 +70,8 @@ class Restfull {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return rateList;
 
+		return rateList;
 	}
 
 	private static <T> List<T> getResultListUsingWrapper(String url, Class<T> clazz, Map<String, String> map)
@@ -90,18 +88,18 @@ class Restfull {
 		JAXBContext jaxbContext = JAXBContext.newInstance(Wrapper.class, clazz);
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		return unmarshalusingWrapper(unmarshaller, clazz, reader);
+		return unmarshallWithWrapper(unmarshaller, clazz, reader);
 	}
 
-	private static <T> List<T> unmarshalusingWrapper(Unmarshaller unmarshaller, Class<T> clazz, Reader reader)
+	private static <T> List<T> unmarshallWithWrapper(Unmarshaller unmarshaller, Class<T> clazz, Reader reader)
 			throws JAXBException {
 
 		StreamSource streamSource = new StreamSource(reader);
 		@SuppressWarnings("unchecked")
 		Wrapper<T> wrapper = (Wrapper<T>) unmarshaller.unmarshal(streamSource, Wrapper.class).getValue();
 		List<T> result = wrapper.getItems();
-		return result;
 
+		return result;
 	}
 }
 
@@ -121,5 +119,4 @@ class Wrapper<T> {
 	public List<T> getItems() {
 		return items;
 	}
-
 }

@@ -25,6 +25,4 @@ public class ExchangeRateResultBean {
 	public void setDateTo(Date dateTo) {
 		this.dateTo = dateTo;
 	}
-	
-	
 }

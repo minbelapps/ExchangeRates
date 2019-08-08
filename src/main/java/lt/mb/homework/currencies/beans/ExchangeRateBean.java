@@ -36,7 +36,4 @@ public class ExchangeRateBean {
 	public void setDiffRatio(Float diffRatio) {
 		this.diffRatio = diffRatio;
 	}
-	
-	
-	
 }
